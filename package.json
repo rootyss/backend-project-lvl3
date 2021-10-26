@@ -1,0 +1,23 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "page loader",
+  "main": "index.js",
+  "bin": {
+    "page-loader": "bin/page-loader.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rootyss/backend-project-lvl3.git"
+  },
+  "author": "rooty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rootyss/backend-project-lvl3/issues"
+  },
+  "homepage": "https://github.com/rootyss/backend-project-lvl3#readme"
+}
