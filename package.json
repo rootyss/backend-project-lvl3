@@ -19,5 +19,13 @@
   "bugs": {
     "url": "https://github.com/rootyss/backend-project-lvl3/issues"
   },
-  "homepage": "https://github.com/rootyss/backend-project-lvl3#readme"
+  "homepage": "https://github.com/rootyss/backend-project-lvl3#readme",
+  "dependencies": {
+    "commander": "^8.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2"
+  }
 }
