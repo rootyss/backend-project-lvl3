@@ -3,13 +3,12 @@
 [![Actions Status](https://github.com/rootyss/backend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/rootyss/backend-project-lvl3/actions)
 
 ### Install
-```sh
-git clone https://github.com/rootyss/backend-project-lvl3
-cd backend-project-lvl3
-make install
-make publish
-make link
-```
+
+`git clone https://github.com/rootyss/backend-project-lvl3`
+`cd backend-project-lvl3`
+`make install`
+`make publish`
+`make link`
 
 ### Usage
 ```sh
