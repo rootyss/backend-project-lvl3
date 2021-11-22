@@ -4,11 +4,21 @@
 
 ### Install
 
-`git clone https://github.com/rootyss/backend-project-lvl3`
-`cd backend-project-lvl3`
-`make install`
-`make publish`
-`make link`
+```sh
+git clone https://github.com/rootyss/backend-project-lvl3
+```
+```sh
+cd backend-project-lvl3
+```
+```sh
+make install
+```
+```sh
+make publish
+```
+```sh
+make link
+```
 
 ### Usage
 ```sh
