@@ -23,7 +23,9 @@ const changeLinksInPageToRelative = (page, dir) => {
       const { host } = url.parse(temp);
       if (host) return;
       const currentTemp = temp.slice(0, temp.includes('?') ? temp.indexOf('?') : temp.length);
-      if (currentTemp) $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp)));
+      if (currentTemp) {
+        $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp)));
+      }
     });
   });
   return $.html();
