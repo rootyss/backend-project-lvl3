@@ -4,9 +4,12 @@ import url from 'url';
 import _ from 'lodash';
 import cheerio from 'cheerio';
 import Listr from 'listr';
+import debug from 'debug';
 import { createWriteStream, promises as fs } from 'fs';
 import { getHtmlFileName, getNameFromLink } from './utils.js';
 import extractSourceLinks from './parser.js';
+
+const log = debug('page-loader');
 
 const tagsMapping = {
   link: 'href',
@@ -39,11 +42,11 @@ const loadResource = (loadedUrl, link, outputPath) => {
     responseType: 'stream',
   })
     .then(({ data }) => {
-      console.log(`Fetch resource ${loadedUrl} to ${resultFilePath}`);
+      log(`Fetch resource ${loadedUrl} to ${resultFilePath}`);
       data.pipe(createWriteStream(resultFilePath));
     })
     .catch((error) => {
-      console.log(`Fetch resource ${loadedUrl} failed ${error.message}`);
+      log(`Fetch resource ${loadedUrl} failed ${error.message}`);
       throw error;
     });
 };
@@ -54,7 +57,7 @@ export const loadResources = (loadedUrl, outputPath, page) => {
   const resultDirName = getNameFromLink(loadedUrl, 'directory');
   const resultOutput = path.join(outputPath, resultDirName);
   return fs.mkdir(resultOutput).then(() => {
-    console.log(`Create folder ${resultOutput} for resources`);
+    log(`Create folder ${resultOutput} for resources`);
     return relativeLinks.map((link) => {
       const { protocol, host } = new URL(loadedUrl);
       const resourceUrl = `${protocol}//${host}${link}`;
@@ -69,7 +72,7 @@ export const loadResources = (loadedUrl, outputPath, page) => {
       listr.run();
     })
     .catch((error) => {
-      console.log(`Create folder ${resultOutput} failed ${error.message}`);
+      log(`Create folder ${resultOutput} failed ${error.message}`);
       throw error;
     });
 };
@@ -79,7 +82,7 @@ export default (loadedUrl, outputPath) => {
 
   return axios.get(loadedUrl)
     .then((res) => {
-      console.log(`Load page ${loadedUrl} to ${outputPath}`);
+      log(`Load page ${loadedUrl} to ${outputPath}`);
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
       const page = res.data;
       const newPage = changeLinksInPageToRelative(page, sourceDir);
@@ -89,7 +92,7 @@ export default (loadedUrl, outputPath) => {
     .then(({ resultFilePath, newPage, res }) => fs.writeFile(resultFilePath, newPage)
       .then(() => loadResources(loadedUrl, outputPath, res.data))
       .catch((error) => {
-        console.log(`Writing to ${resultFilePath} error, ${error.message}`);
+        log(`Writing to ${resultFilePath} error, ${error.message}`);
         throw error;
       }));
 };
