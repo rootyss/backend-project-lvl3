@@ -1,6 +1,5 @@
 import url from 'url';
 import path from 'path';
-import _ from 'lodash';
 
 export const getKebabCasedLink = (link) => {
   const { host, path: linkPath } = url.parse(link);
@@ -9,13 +8,14 @@ export const getKebabCasedLink = (link) => {
 };
 
 export const getNameFromLink = (link, type = 'file', nameURL = '') => {
+  const newLinkFile = link.includes('.') ? link.slice(0, link.lastIndexOf('.')) : link;
   const urlInKebabCase = getKebabCasedLink(link);
   switch (type) {
     case 'file': {
-      const linkInArr = getKebabCasedLink(link).split('-');
-      const urlinKebabCase = _.dropRight(linkInArr, 1).join('-');
+      const urlinKebabCase = getKebabCasedLink(newLinkFile);
       const ext = path.extname(link) || '.html';
-      return `${nameURL}-${urlinKebabCase}${ext}`;
+      const resultName = `${nameURL}-${urlinKebabCase}${ext}`;
+      return resultName;
     }
     case 'directory': return `${urlInKebabCase}_files`;
     default: return 'none';
