@@ -81,12 +81,12 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     });
 };
 
-export default (loadedUrl, outputPath) => {
+export default (loadedUrl, outputPath = '') => {
+  console.log('Путь стал: ', outputPath);
   const { host: hostname } = new URL(loadedUrl);
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
     .then((res) => {
-      console.log('Путь стал: ', outputPath);
       log(`Load page ${loadedUrl} to ${outputPath}`);
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
       const page = res.data;
@@ -98,7 +98,6 @@ export default (loadedUrl, outputPath) => {
       .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
-        console.log(error);
         throw error;
       }))
     .catch((error) => Promise.reject(new Error(error)));
