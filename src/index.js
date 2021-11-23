@@ -26,7 +26,7 @@ const changeLinksInPageToRelative = (page, dir, hostname) => {
       const { host } = url.parse(temp);
       const currentTemp = temp.slice(0, temp.includes('?') ? temp.indexOf('?') : temp.length);
       if (host === hostname) {
-        $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp, 'file', hostname)));
+        $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp)));
       }
       if (host) return;
       if (currentTemp) {
