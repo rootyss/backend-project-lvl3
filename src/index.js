@@ -56,7 +56,7 @@ const loadResource = (loadedUrl, link, outputPath, hostname) => {
 };
 
 export const loadResources = (loadedUrl, outputPath, page, hostname) => {
-  const relativeLinks = extractSourceLinks(page);
+  const relativeLinks = extractSourceLinks(page, hostname);
   const resultDirName = getNameFromLink(loadedUrl, 'directory');
   const resultOutput = path.join(outputPath, resultDirName);
   return fs.mkdir(resultOutput).then(() => {

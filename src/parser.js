@@ -8,7 +8,7 @@ const tagsMapping = {
   script: 'src',
 };
 
-const parse = (page) => {
+const parse = (page, hostname) => {
   const links = [];
   const $ = cheerio.load(page);
   _.keys(tagsMapping).forEach((el) => {
@@ -22,6 +22,7 @@ const parse = (page) => {
   });
   const relativeLinks = links.filter((i) => {
     const { host } = url.parse(i);
+    if (host === hostname) return true;
     return !host;
   });
   return relativeLinks;
