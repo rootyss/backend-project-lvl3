@@ -15,6 +15,7 @@ pageLoaderCLI
       .then(() => console.log(`Page loaded to ${output}`))
       .catch((error) => {
         console.error(error.message);
+        console.log(output);
         process.exit(1);
       });
   });
