@@ -86,6 +86,7 @@ export default (loadedUrl, outputPath) => {
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
     .then((res) => {
+      console.log('Путь стал: ', outputPath);
       log(`Load page ${loadedUrl} to ${outputPath}`);
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
       const page = res.data;
