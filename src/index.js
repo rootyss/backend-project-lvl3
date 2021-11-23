@@ -39,7 +39,7 @@ const changeLinksInPageToRelative = (page, dir, hostname) => {
 
 const loadResource = (loadedUrl, link, outputPath, hostname) => {
   const resultFilePath = path.join(outputPath, getNameFromLink(link, 'file', hostname));
-  console.log(`Zagruzka s ${loadedUrl}`);
+  
   return axios({
     method: 'get',
     url: loadedUrl,
@@ -65,6 +65,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     return relativeLinks.map((link) => {
       const { protocol, host } = new URL(loadedUrl);
       const resourceUrl = `${protocol}//${host}${link}`;
+      console.log(`Bil ${loadedUrl}; Stal ${resourceUrl}`);
       return {
         title: `Load ${link}`,
         task: () => loadResource(resourceUrl, link, resultOutput, hostname),
