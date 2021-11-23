@@ -82,17 +82,6 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
 };
 
 export default (loadedUrl, outputPath = '') => {
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  console.log('Путь стал: ', outputPath);
-  
   const { host: hostname } = new URL(loadedUrl);
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
