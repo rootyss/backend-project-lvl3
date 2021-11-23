@@ -86,7 +86,6 @@ export default (loadedUrl, outputPath) => {
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
     .then((res) => {
-      if(!outputPath) throw error;
       log(`Load page ${loadedUrl} to ${outputPath}`);
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
       const page = res.data;
@@ -99,5 +98,6 @@ export default (loadedUrl, outputPath) => {
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
         throw error;
-      }));
+      }))
+    .catch((error) => Promise.reject(new Error(error)));
 };
