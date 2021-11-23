@@ -78,8 +78,8 @@ export const loadResources = (loadedUrl, outputPath, page, nameURL) => {
 };
 
 export default (loadedUrl, outputPath) => {
-  const { host, pathname } = new URL(loadedUrl);
-  const nameURL = `${path.join(host, pathname)}`.replace(/[^a-z1-9]/g, '-');
+  const { host } = new URL(loadedUrl);
+  const nameURL = host.replace(/[^a-z1-9]/g, '-');
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
     .then((res) => {
