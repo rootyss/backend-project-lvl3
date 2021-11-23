@@ -12,10 +12,9 @@ pageLoaderCLI
   .action((url, argv) => {
     const { output } = argv;
     pageLoader(url, output)
-      .then(() => console.log(`Page loaded to ${output}`))
+      .then(() => console.log(`Page loaded to ${String(output)}`))
       .catch((error) => {
         console.error(error.message);
-        console.log(output);
         process.exit(1);
       });
   });
