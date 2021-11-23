@@ -23,6 +23,7 @@ const parse = (page, hostname) => {
   const relativeLinks = links.filter((i) => {
     const { host } = url.parse(i);
     if (host === hostname) return true;
+    console.log(host, hostname, host === hostname);
     return !host;
   });
   return relativeLinks;
