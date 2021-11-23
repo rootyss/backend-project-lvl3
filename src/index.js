@@ -39,7 +39,6 @@ const changeLinksInPageToRelative = (page, dir, hostname) => {
 
 const loadResource = (loadedUrl, link, outputPath, hostname) => {
   const finalLink = link.includes('//') ? new URL(link).pathname : link;
-  console.log('Itog линк: ', link);
   const resultFilePath = path.join(outputPath, getNameFromLink(finalLink, 'file', hostname));
 
   return axios({
@@ -53,7 +52,7 @@ const loadResource = (loadedUrl, link, outputPath, hostname) => {
     })
     .catch((error) => {
       log(`Fetch resource ${loadedUrl} failed ${error.message}`);
-      throw error;
+      return Promise.reject(error)
     });
 };
 
