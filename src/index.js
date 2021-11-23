@@ -98,5 +98,5 @@ export default (loadedUrl, outputPath) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
         return Promise.reject(error);
       }))
-    .catch((error) => return Promise.reject(error));
+    .catch((error) => Promise.reject(error));
 };
