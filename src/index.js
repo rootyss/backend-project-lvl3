@@ -52,7 +52,7 @@ const loadResource = (loadedUrl, link, outputPath, hostname) => {
     })
     .catch((error) => {
       log(`Fetch resource ${loadedUrl} failed ${error.message}`);
-      return Promise.reject(error.message)
+      return Promise.reject(error)
     });
 };
 
@@ -77,7 +77,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     })
     .catch((error) => {
       log(`Create folder ${resultOutput} failed ${error.message}`);
-      return Promise.reject(error.message)
+      return Promise.reject(error)
     });
 };
 
@@ -97,6 +97,6 @@ export default (loadedUrl, outputPath) => {
       .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
-        return Promise.reject(error.message)
+        return Promise.reject(error)
       }));
 };
