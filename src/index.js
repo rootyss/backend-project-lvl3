@@ -77,7 +77,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     })
     .catch((error) => {
       log(`Create folder ${resultOutput} failed ${error.message}`);
-      throw error;
+      return Promise.reject(error)
     });
 };
 
@@ -97,6 +97,6 @@ export default (loadedUrl, outputPath) => {
       .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
-        throw error;
+        return Promise.reject(error)
       }));
 };
