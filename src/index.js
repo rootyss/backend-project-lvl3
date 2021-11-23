@@ -17,25 +17,28 @@ const tagsMapping = {
   script: 'src',
 };
 
-const changeLinksInPageToRelative = (page, dir, nameURL) => {
+const changeLinksInPageToRelative = (page, dir, hostname) => {
   const $ = cheerio.load(page);
   _.keys(tagsMapping).forEach((tag) => {
     $(tag).each((index, element) => {
       const temp = $(element).attr(tagsMapping[tag]);
       if (!temp) return;
       const { host } = url.parse(temp);
-      if (host) return;
       const currentTemp = temp.slice(0, temp.includes('?') ? temp.indexOf('?') : temp.length);
+      if (host === hostname) {
+        $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp, 'file', hostname)));
+      }
+      if (host) return;
       if (currentTemp) {
-        $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp, 'file', nameURL)));
+        $(element).attr(tagsMapping[tag], path.join(dir, getNameFromLink(currentTemp, 'file', hostname)));
       }
     });
   });
   return $.html();
 };
 
-const loadResource = (loadedUrl, link, outputPath, nameURL) => {
-  const resultFilePath = path.join(outputPath, getNameFromLink(link, 'file', nameURL));
+const loadResource = (loadedUrl, link, outputPath, hostname) => {
+  const resultFilePath = path.join(outputPath, getNameFromLink(link, 'file', hostname));
 
   return axios({
     method: 'get',
@@ -52,7 +55,7 @@ const loadResource = (loadedUrl, link, outputPath, nameURL) => {
     });
 };
 
-export const loadResources = (loadedUrl, outputPath, page, nameURL) => {
+export const loadResources = (loadedUrl, outputPath, page, hostname) => {
   const relativeLinks = extractSourceLinks(page);
   const resultDirName = getNameFromLink(loadedUrl, 'directory');
   const resultOutput = path.join(outputPath, resultDirName);
@@ -63,7 +66,7 @@ export const loadResources = (loadedUrl, outputPath, page, nameURL) => {
       const resourceUrl = `${protocol}//${host}${link}`;
       return {
         title: `Load ${link}`,
-        task: () => loadResource(resourceUrl, link, resultOutput, nameURL),
+        task: () => loadResource(resourceUrl, link, resultOutput, hostname),
       };
     });
   })
@@ -78,8 +81,7 @@ export const loadResources = (loadedUrl, outputPath, page, nameURL) => {
 };
 
 export default (loadedUrl, outputPath) => {
-  const { host } = new URL(loadedUrl);
-  const nameURL = host.replace(/[^a-z1-9]/g, '-');
+  const { host: hostname } = new URL(loadedUrl);
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
     .then((res) => {
@@ -87,12 +89,12 @@ export default (loadedUrl, outputPath) => {
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
 
       const page = res.data;
-      const newPage = changeLinksInPageToRelative(page, sourceDir, nameURL);
+      const newPage = changeLinksInPageToRelative(page, sourceDir, hostname);
 
       return { resultFilePath, newPage, res };
     })
     .then(({ resultFilePath, newPage, res }) => fs.writeFile(resultFilePath, newPage)
-      .then(() => loadResources(loadedUrl, outputPath, res.data, nameURL))
+      .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
         throw error;

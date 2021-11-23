@@ -7,14 +7,14 @@ export const getKebabCasedLink = (link) => {
   return name.split('-').filter((i) => i).join('-');
 };
 
-export const getNameFromLink = (link, type = 'file', nameURL = '') => {
-  const newLinkFile = link.includes('.') ? link.slice(0, link.lastIndexOf('.')) : link;
+export const getNameFromLink = (link, type = 'file', hostname = '') => {
   const urlInKebabCase = getKebabCasedLink(link);
   switch (type) {
     case 'file': {
+      const newLinkFile = link.includes('.') ? link.slice(0, link.lastIndexOf('.')) : link;
       const urlinKebabCase = getKebabCasedLink(newLinkFile);
       const ext = path.extname(link) || '.html';
-      const resultName = `${nameURL}-${urlinKebabCase}${ext}`;
+      const resultName = `${hostname}-${urlinKebabCase}${ext}`;
       return resultName;
     }
     case 'directory': return `${urlInKebabCase}_files`;
