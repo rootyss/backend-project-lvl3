@@ -97,6 +97,7 @@ export default (loadedUrl, outputPath) => {
       .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
+        console.log(error);
         throw error;
       }))
     .catch((error) => Promise.reject(new Error(error)));
