@@ -72,7 +72,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     });
   })
     .then((tasks) => {
-      const listr = new Listr(tasks, { concurrent: true, exitOnError: false });
+      const listr = new Listr(tasks, { concurrent: true });
       listr.run();
     })
     .catch((error) => {
