@@ -14,7 +14,7 @@ export const getNameFromLink = (link, type = 'file', hostname = '') => {
       const newLinkFile = link.includes('.') ? link.slice(0, link.lastIndexOf('.')) : link;
       const urlinKebabCase = getKebabCasedLink(newLinkFile);
       const ext = path.extname(link) || '.html';
-      const resultName = `${hostname.split('.').join('-')}-${urlinKebabCase}${ext}`;
+      const resultName = `${hostname.split('.').join('-')}${hostname ? '-' : ''}${urlinKebabCase}${ext}`;
       return resultName;
     }
     case 'directory': return `${urlInKebabCase}_files`;
