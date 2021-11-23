@@ -88,7 +88,7 @@ export default (loadedUrl, outputPath) => {
     .then((res) => {
       
       log(`Load page ${loadedUrl} to ${outputPath}`);
-      const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
+      const resultFilePath = path.join(`${outputPath}`, getHtmlFileName(loadedUrl));
       const page = res.data;
       const newPage = changeLinksInPageToRelative(page, sourceDir, hostname);
 
