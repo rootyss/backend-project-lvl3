@@ -90,13 +90,13 @@ export default (loadedUrl, outputPath) => {
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
       const page = res.data;
       const newPage = changeLinksInPageToRelative(page, sourceDir, hostname);
-
       return { resultFilePath, newPage, res };
     })
     .then(({ resultFilePath, newPage, res }) => fs.writeFile(resultFilePath, newPage)
       .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
-        throw new Error(error);
-      }));
+        return Promise.reject(error);
+      }))
+    .catch((error) => return Promise.reject(error));
 };
