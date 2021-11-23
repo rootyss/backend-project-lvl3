@@ -39,9 +39,7 @@ const changeLinksInPageToRelative = (page, dir, hostname) => {
 
 const loadResource = (loadedUrl, link, outputPath, hostname) => {
   const finalLink = link.includes('//') ? new URL(link).pathname : link;
-  const resultFilePath = path
-    .join(outputPath, getNameFromLink(finalLink, 'file', hostname));
-  console.log(finalLink, resultFilePath);
+  const resultFilePath = path.join(outputPath, getNameFromLink(finalLink, 'file', hostname));
   return axios({
     method: 'get',
     url: loadedUrl,
