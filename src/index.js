@@ -64,7 +64,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     log(`Create folder ${resultOutput} for resources`);
     return relativeLinks.map((link) => {
       const { protocol, host } = new URL(loadedUrl);
-      const resourceUrl = new URL(link).host ? `${protocol}//${host}${link}` : link;
+      const resourceUrl = !link.includes('//') ? `${protocol}//${host}${link}` : link;
       console.log(`Bil ${link}; Stal ${resourceUrl}`);
       return {
         title: `Load ${link}`,
