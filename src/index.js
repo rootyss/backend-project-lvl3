@@ -10,7 +10,6 @@ import { getHtmlFileName, getNameFromLink } from './utils.js';
 import extractSourceLinks from './parser.js';
 
 const log = debug('page-loader');
-const logAxios = debug('page-loader: axios');
 
 const tagsMapping = {
   link: 'href',
@@ -49,7 +48,6 @@ const loadResource = (loadedUrl, link, outputPath, hostname) => {
     .then(({ data }) => {
       log(`Fetch resource ${loadedUrl} to ${resultFilePath}`);
       data.pipe(createWriteStream(resultFilePath));
-      logAxios(data);
     })
     .catch((error) => {
       log(`Fetch resource ${loadedUrl} failed ${error.message}`);
@@ -67,7 +65,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
       const { protocol, host } = new URL(loadedUrl);
       const resourceUrl = `${protocol}//${host}${link}`;
       return {
-        title: `Load ${link}`,
+        title: `Load ${link} ${hostname}`,
         task: () => loadResource(resourceUrl, link, resultOutput, hostname),
       };
     });
@@ -89,7 +87,6 @@ export default (loadedUrl, outputPath) => {
     .then((res) => {
       log(`Load page ${loadedUrl} to ${outputPath}`);
       const resultFilePath = path.join(outputPath, getHtmlFileName(loadedUrl));
-      logAxios(res);
       const page = res.data;
       const newPage = changeLinksInPageToRelative(page, sourceDir, hostname);
 
