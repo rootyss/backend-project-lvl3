@@ -81,8 +81,7 @@ export const loadResources = (loadedUrl, outputPath, page, hostname) => {
     });
 };
 
-export default (loadedUrl, outputPath) => {
-  console.log('Prishel put: ', outputPath);
+const pageLoader = (loadedUrl, outputPath) => {
   const { host: hostname } = new URL(loadedUrl);
   const sourceDir = getNameFromLink(loadedUrl, 'directory');
   return axios.get(loadedUrl)
@@ -103,3 +102,5 @@ export default (loadedUrl, outputPath) => {
       }))
     .catch((error) => Promise.reject(new Error(error)));
 };
+
+export default pageLoader;
