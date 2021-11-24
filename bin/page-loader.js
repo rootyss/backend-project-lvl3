@@ -10,6 +10,7 @@ program
   .action((url) => pageLoader(url, program.opts().output)
     .then(() => console.log(`Page loaded to ${program.opts().output}`))
     .catch((error) => {
+      console.log(program.opts().output, process.cwd());
       console.error(error.message);
       process.exit(1);
     }))
