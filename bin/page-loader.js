@@ -7,8 +7,8 @@ program
   .description('Page loader utility')
   .arguments('<url>')
   .option('-o, --output [dir]', 'output dir', process.cwd())
-  .action((url) => pageLoader(url, program.output)
-    .then(() => console.log(`Page loaded to ${program.output}`))
+  .action((url) => pageLoader(url, program.opts().output)
+    .then(() => console.log(`Page loaded to ${program.opts().output}`))
     .catch((error) => {
       console.error(error.message);
       process.exit(1);
