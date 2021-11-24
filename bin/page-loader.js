@@ -11,7 +11,8 @@ pageLoaderCLI
   .option('-o, --output [dir]', 'output dir', process.cwd())
   .action((url, argv) => {
     const { output } = argv;
-    pageLoader(url, output)
+
+   return pageLoader(url, output)
       .then(() => console.log(`Page loaded to ${output}`))
       .catch((error) => {
         console.error(error.message);
