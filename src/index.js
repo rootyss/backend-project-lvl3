@@ -44,11 +44,11 @@ const loadResource = (loadedUrl, link, outputPath, hostname) => {
   return axios({
     method: 'get',
     url: loadedUrl,
-    responseType: 'stream',
+    responseType: 'arraybuffer',
   })
     .then(({ data }) => {
       log(`Fetch resource ${loadedUrl} to ${resultFilePath}`);
-      data.pipe(createWriteStream(resultFilePath));
+      return fs.writeFile(resultFilePath, data);
     })
     .catch((error) => {
       log(`Fetch resource ${loadedUrl} failed ${error.message}`);
