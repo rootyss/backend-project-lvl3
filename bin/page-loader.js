@@ -7,7 +7,7 @@ program
   .description('Page loader utility')
   .arguments('<url>')
   .option('-o, --output [dir]', 'output dir', process.cwd())
-  .action((url, options) => pageLoader(url, options.output)
+  .action((url, options) => pageLoader(url, options.output = process.cwd())
     .then((outputPath) => console.log(`Page loaded to ${outputPath}`))
     .catch((error) => {
       console.error(error.message);
