@@ -95,6 +95,7 @@ export default (loadedUrl, outputPath) => {
     })
     .then(({ resultFilePath, newPage, res }) => fs.writeFile(resultFilePath, newPage)
       .then(() => loadResources(loadedUrl, outputPath, res.data, hostname))
+      .then(() => outputPath)
       .catch((error) => {
         log(`Writing to ${resultFilePath} error, ${error.message}`);
         throw error;
